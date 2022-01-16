@@ -34,4 +34,23 @@ router.get("/movie/:id", (req, res, next) => {
   });
 });
 
+router.post("/search", (req, res, next) => {
+  // res.send("Sanity Check");//checked
+  //userSearchTerm should be URI encoded
+  const userSearchTerm = ecn(req.body.movieSearch);
+  const cat = req.body.cat;
+  const movieUrl = `${apiBaseUrl}/search/${cat}?query=${userSearchTerm}&api_key=${apiKey}`;
+  request.url(movieUrl, (error, response, movieData) => {
+    const parsedData = JSON.parse(movieData);
+    // res.json(parsedData); //checked
+    //search people breaks the code but works for movie title
+    if (cat=='person'){
+      parsedData.results=parsedData.results[0].known_for;
+    }
+    res.render("index", {
+      parsedData: parsedData.results,
+    });
+  });
+});
+
 module.exports = router;

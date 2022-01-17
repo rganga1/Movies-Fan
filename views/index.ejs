@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+
+<%# Index template %>
+
 <html>
   <head>
     <title>Movie App</title>
+
     <% include head %>
   </head>
+
   <body>
     <% include navbar %>
 
@@ -13,13 +18,14 @@
           <h1>Now Playing</h1>
         </div>
         <div class="col-sm-12">
-          <%parsedData.forEach((movie)=>{ %>
+          <%# Extract dynamic data from array parsedData %> <%
+          parsedData.forEach( (movie) => { %>
           <div class="col-md-3 col-sm-4 poster">
-            <a href="">
-              <img src="<%=imageBaseUrl+movie.poster_path %>" alt="movie_img">
+            <a href="/movie/<%= movie.id %>">
+              <img src="<%= imageBaseUrl + movie.poster_path %>" />
             </a>
           </div>
-          <%})%>
+          <% }) %>
         </div>
       </div>
     </div>

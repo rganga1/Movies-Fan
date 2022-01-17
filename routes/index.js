@@ -7,9 +7,10 @@ const apiBaseUrl = "http://api.themoviedb.org/3";
 const nowPlayingUrl = `${apiBaseUrl}/movie/now_playing?api_key=${apiKey}`;
 const imageBaseUrl = "http://image.tmdb.org/t/p/w300";
 
-// router.use((req, res, next) => {
-//   res.locals.imageBaseUrl = "http://image.tmdb.org/t/p/w300";
-// });
+router.use((req, res, next) => {
+  res.locals.imageBaseUrl = "http://image.tmdb.org/t/p/w300";
+  next(); //This is must - all problems started without this
+});
 /* GET home page. */
 router.get("/", function (req, res, next) {
   request.get(nowPlayingUrl, (error, response, movieData) => {
